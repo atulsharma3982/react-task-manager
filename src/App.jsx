@@ -25,7 +25,6 @@ function App() {
 
 
   const handleSave = () => {
-    // const ctask = inputRef.current.value.trim()
     const ctask = task.trim()
     if  (ctask) {
       if (editingID !== null) {
@@ -53,19 +52,18 @@ function App() {
     }
   }
 
-  const handleStatus = (e, id) => {
+  const handleStatus = (id) => {
     setTasks(tasks.map((task) => {
       if (task.id === id) {
-        const update = {
+        return {
           ...task, isComplete: !task.isComplete
         }
-        return update
       }
       return task
     }))
   }
 
-  const handleEdit = (e, id) => {
+  const handleEdit = (id) => {
     // const id = e.target.parentElement.parentElement.id
     // inputRef.current.value = tasks.find(t => t.id === id).data
     setTask(tasks.find(t => t.id === id).data)
@@ -76,7 +74,7 @@ function App() {
     // }))
   }
 
-  const handleDelete = (e, id) => {
+  const handleDelete = (id) => {
     setTasks(tasks.filter(t => {
       return !(t.id === id)
     }))
@@ -103,11 +101,11 @@ function App() {
             (showCompleted ? tasks.filter(t => t.isComplete) : tasks.filter(t => !t.isComplete)).map((t) => {
               const status = t.isComplete
               return <div key={t.id} id={t.id} className='task flex gap-2 items-center px-4 bg-emerald-800 md:w-fit w-[stretch] rounded-lg py-4'>
-                <input onChange={(e) => { handleStatus(e, t.id) }} className='cursor-pointer' type="checkbox" name="status" checked={status} />
+                <input onChange={() => { handleStatus(t.id) }} className='cursor-pointer' type="checkbox" name="status" checked={status} />
                 <p className={status ? 'md:w-xs w-2xs line-through' : 'md:w-xs w-2xs'}>{t.data}</p>
                 <div className="buttons flex gap-3">
-                  <button onClick={(e) => { handleEdit(e, t.id) }} className='flex gap-1 items-center cursor-pointer bg-emerald-600 px-3 py-2 rounded-lg h-8 '><FaEdit /><span className='font-semibold md:block hidden'>Edit</span></button>
-                  <button onClick={(e) => { handleDelete(e, t.id) }} className='flex gap-1 items-center cursor-pointer bg-emerald-600 px-3 py-2 rounded-lg h-8 '><MdDeleteForever /><span className='font-semibold md:block hidden'>Delete</span></button>
+                  <button onClick={() => { handleEdit(t.id) }} className='flex gap-1 items-center cursor-pointer bg-emerald-600 px-3 py-2 rounded-lg h-8 '><FaEdit /><span className='font-semibold md:block hidden'>Edit</span></button>
+                  <button onClick={() => { handleDelete(t.id) }} className='flex gap-1 items-center cursor-pointer bg-emerald-600 px-3 py-2 rounded-lg h-8 '><MdDeleteForever /><span className='font-semibold md:block hidden'>Delete</span></button>
                 </div>
               </div>
             }
