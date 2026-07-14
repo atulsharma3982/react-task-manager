@@ -6,6 +6,7 @@ import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 
 function App() {
+  const [task, setTask] = useState("")
   const [tasks, setTasks] = useState([])
   const [showCompleted, setShowCompleted] = useState(false)
   const [editingID, setEditingID] = useState(null)
@@ -24,7 +25,8 @@ function App() {
 
 
   const handleSave = () => {
-    const ctask = inputRef.current.value.trim()
+    // const ctask = inputRef.current.value.trim()
+    const ctask = task.trim()
     if  (ctask) {
       if (editingID !== null) {
         setTasks(tasks.map((task) => {
@@ -46,7 +48,8 @@ function App() {
         }])
         setShowCompleted(false)
       }
-      inputRef.current.value = ""
+      // inputRef.current.value = ""
+      setTask("")
     }
   }
 
@@ -64,7 +67,8 @@ function App() {
 
   const handleEdit = (e, id) => {
     // const id = e.target.parentElement.parentElement.id
-    inputRef.current.value = tasks.find(t => t.id === id).data
+    // inputRef.current.value = tasks.find(t => t.id === id).data
+    setTask(tasks.find(t => t.id === id).data)
     inputRef.current.focus()
     setEditingID(id);
     // setTasks(tasks.filter(t => {
@@ -86,7 +90,7 @@ function App() {
       <div className="container h-[calc(100vh-3rem)] md:w-2xl bg-emerald-400 m-auto">
         <div className='bg-[#a9e4d9] text-md border-b h-28'>
           <div className='flex justify-center items-center p-4 gap-2'>
-            <input ref={inputRef} type="text" placeholder='Enter your task' className='w-full  border-2 rounded-sm px-4 py-1' />
+            <input value={task} ref={inputRef} onChange={(e)=>{setTask(e.target.value)}} type="text" placeholder='Enter your task' className='w-full  border-2 rounded-sm px-4 py-1' />
             <button id='save' onClick={handleSave} className='border-2 rounded-sm px-4 py-1 cursor-pointer' >Save</button>
           </div>
           <div className='px-8 py-2 flex items-center gap-2'>
