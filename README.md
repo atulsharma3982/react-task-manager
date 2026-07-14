@@ -73,9 +73,9 @@ Each task is stored as an object with the following properties:
 
 The application uses:
 
-- **useState** for managing tasks, filters, and editing state.
-- **useEffect** to load tasks from Local Storage on startup and save changes automatically.
-- **useRef** to access the task input field and filter checkbox.
+- **useState** to manage the current input value, task list, filter state, and editing state.
+- **useEffect** to load tasks from Local Storage when the application starts and automatically save changes.
+- **useRef** to focus the input field when editing an existing task.
 
 ## Learning Objectives
 
