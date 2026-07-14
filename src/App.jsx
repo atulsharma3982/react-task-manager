@@ -11,7 +11,6 @@ function App() {
   const [editingID, setEditingID] = useState(null)
 
   const inputRef = useRef(null)
-  const showRef = useRef(null)
 
   useEffect(() => {
     let data = localStorage.getItem("tasks") ? JSON.parse(localStorage.getItem("tasks")) : [];
@@ -49,12 +48,9 @@ function App() {
       }
       inputRef.current.value = ""
     }
-    console.log(tasks)
   }
 
   const handleStatus = (e, id) => {
-    // const id = e.target.closest("div").id
-
     setTasks(tasks.map((task) => {
       if (task.id === id) {
         const update = {
@@ -77,7 +73,6 @@ function App() {
   }
 
   const handleDelete = (e, id) => {
-    // const id = e.target.parentElement.parentElement.id
     setTasks(tasks.filter(t => {
       return !(t.id === id)
     }))
@@ -95,7 +90,7 @@ function App() {
             <button id='save' onClick={handleSave} className='border-2 rounded-sm px-4 py-1 cursor-pointer' >Save</button>
           </div>
           <div className='px-8 py-2 flex items-center gap-2'>
-            <input ref={showRef} onChange={() => setShowCompleted(showRef.current.checked)} className='cursor-pointer size-4' type="checkbox" name="showCompleted" id="showCompleted" checked={showCompleted} />
+            <input onChange={(e) => setShowCompleted(e.target.checked)} className='cursor-pointer size-4' type="checkbox" name="showCompleted" id="showCompleted" checked={showCompleted} />
             <label className='font-semibold' htmlFor="showCompleted">Show Completed Tasks</label>
           </div>
         </div>
@@ -105,9 +100,6 @@ function App() {
               const status = t.isComplete
               return <div key={t.id} id={t.id} className='task flex gap-2 items-center px-4 bg-emerald-800 md:w-fit w-[stretch] rounded-lg py-4'>
                 <input onChange={(e) => { handleStatus(e, t.id) }} className='cursor-pointer' type="checkbox" name="status" checked={status} />
-                {/* {status ? <input onChange={handleStatus} className='cursor-pointer' type="checkbox" name="status" checked /> :
-                  <input onChange={handleStatus} className='cursor-pointer' type="checkbox" name="status" />} */}
-                {/* {status ? <p className='md:w-xs w-2xs line-through'>{t.data}</p> : <p className='md:w-xs w-2xs'>{t.data}</p>} */}
                 <p className={status ? 'md:w-xs w-2xs line-through' : 'md:w-xs w-2xs'}>{t.data}</p>
                 <div className="buttons flex gap-3">
                   <button onClick={(e) => { handleEdit(e, t.id) }} className='flex gap-1 items-center cursor-pointer bg-emerald-600 px-3 py-2 rounded-lg h-8 '><FaEdit /><span className='font-semibold md:block hidden'>Edit</span></button>
